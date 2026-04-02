@@ -1,27 +1,27 @@
 # 🔍 Smart Network Recon Tool
 
-A Python-based network reconnaissance tool that automates scanning using Nmap and provides structured security analysis with service/version detection and basic CVE-based vulnerability mapping.
+A Python-based network reconnaissance tool that automates scanning using Nmap and provides structured security analysis with service/version detection, CVE-based vulnerability mapping, and intelligent suggestions.
 
 ---
 
 ## 🚀 Overview
 
-This project automates the process of network scanning and transforms raw Nmap output into meaningful security insights.
+This tool automates network reconnaissance and transforms raw Nmap output into meaningful security insights.
 
 Instead of just listing open ports, it:
 
-* Identifies running services and versions
-* Highlights potential security risks
-* Maps known vulnerabilities (CVEs)
-* Generates a simple risk-based analysis
+* Identifies services and versions
+* Maps known vulnerabilities (CVE)
+* Provides risk-based analysis
+* Suggests next security actions
 
 ---
 
 ## 🎯 Why This Project?
 
-Most beginners can run Nmap but struggle to interpret the results.
+Most beginners can run Nmap but struggle to interpret results.
 
-This tool bridges that gap by converting raw scan data into actionable insights using service detection, version analysis, and vulnerability mapping.
+This tool bridges that gap by converting raw scan data into actionable insights, simulating how real security tools assist analysts.
 
 ---
 
@@ -29,10 +29,11 @@ This tool bridges that gap by converting raw scan data into actionable insights 
 
 * Automated Nmap scanning
 * Service and version detection
-* XML parsing for structured data extraction
-* Basic CVE mapping (local database)
+* CVE-based vulnerability mapping
 * Risk scoring system
-* Clean and readable output
+* Smart security suggestions
+* CLI-based execution
+* JSON report generation
 
 ---
 
@@ -41,17 +42,19 @@ This tool bridges that gap by converting raw scan data into actionable insights 
 * Python
 * Nmap
 * XML Parsing
+* JSON
 
 ---
 
 ## 🧠 How It Works
 
-1. User inputs a target (IP or domain)
+1. User provides target via CLI
 2. Tool runs Nmap scan (`-sT`, `-sV`)
 3. Output is saved as XML
-4. XML is parsed to extract open ports and services
-5. Service versions are matched with known CVEs
-6. Risk-based analysis is displayed
+4. XML is parsed to extract services
+5. Versions are matched with CVEs
+6. Risk analysis + suggestions are displayed
+7. Results are saved in JSON format
 
 ---
 
@@ -60,13 +63,7 @@ This tool bridges that gap by converting raw scan data into actionable insights 
 ### Run the tool:
 
 ```bash
-python main.py
-```
-
-### Enter target when prompted:
-
-```
-scanme.nmap.org
+python main.py scanme.nmap.org
 ```
 
 ---
@@ -85,18 +82,31 @@ scanme.nmap.org
        - CVE-2016-0777 → HIGH
     🔥 Risk: HIGH
 
-[+] Port 80 → http (Apache 2.4.6)
-    ⚠️ Known Vulnerabilities:
-       - CVE-2017-3169
 
-[!] Overall Risk Score: 6
+    → Suggestion: Check for brute-force or weak credentials
+
+[+] Port 80 → HTTP (Apache 2.4.7)
+    ✓ No known vulnerabilities
+    → Suggestion: Run web vulnerability scan
 ```
+
+---
+
+## 📂 Generated Report
+
+After execution, a JSON report is created:
+
+```
+report.json
+```
+
+This file contains structured scan results for further analysis or integration.
 
 ---
 
 ## 🔍 CVE Mapping
 
-The tool uses a basic local database to map service versions to known vulnerabilities (CVE).
+The tool uses a local CVE database to map service versions to known vulnerabilities.
 
 This demonstrates how real-world vulnerability scanners correlate software versions with publicly known security issues.
 
@@ -106,14 +116,15 @@ This demonstrates how real-world vulnerability scanners correlate software versi
 
 * Understood network reconnaissance workflow
 * Learned automation using Python
-* Gained practical exposure to vulnerability analysis
-* Improved understanding of service-version security risks
+* Gained insight into vulnerability analysis
+* Built a CLI-based security tool
+* Improved structured output and reporting
 
 ---
 
 ## ⚠️ Limitations
 
-* Uses a manual CVE database (limited coverage)
+* Uses a static CVE database
 * No real-time vulnerability lookup
 * Not a full vulnerability scanner
 
@@ -121,23 +132,23 @@ This demonstrates how real-world vulnerability scanners correlate software versi
 
 ## 🔮 Future Improvements
 
-* Integration with real-time CVE APIs
-* Severity classification (Low / Medium / High)
-* Export reports (JSON / HTML)
-* GUI-based interface
+* Integrate real-time CVE APIs (NVD)
+* Add severity classification system
+* Automate follow-up scans
+* Build GUI interface
 
 ---
 
 ## ⚠️ Disclaimer
 
 This tool is for educational purposes only.
-Do not use it on systems without proper authorization.
+Do not scan systems without proper authorization.
 
 ---
 
 ## 👨‍💻 Author
 
 **Sraban Kumar Singh**
-B.Tech CSE Student | Cybersecurity Enthusiast
+B.Tech CSE | Cybersecurity Enthusiast
 
 GitHub: https://github.com/ig-rajput
