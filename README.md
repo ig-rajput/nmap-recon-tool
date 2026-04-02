@@ -1,6 +1,6 @@
 # 🔍 Smart Network Recon Tool
 
-A Python-based network reconnaissance tool that automates scanning using Nmap and provides basic security analysis with version-based vulnerability (CVE) mapping.
+A Python-based network reconnaissance tool that automates scanning using Nmap and provides structured security analysis with service/version detection and basic CVE-based vulnerability mapping.
 
 ---
 
@@ -11,8 +11,17 @@ This project automates the process of network scanning and transforms raw Nmap o
 Instead of just listing open ports, it:
 
 * Identifies running services and versions
-* Highlights potential risks
+* Highlights potential security risks
 * Maps known vulnerabilities (CVEs)
+* Generates a simple risk-based analysis
+
+---
+
+## 🎯 Why This Project?
+
+Most beginners can run Nmap but struggle to interpret the results.
+
+This tool bridges that gap by converting raw scan data into actionable insights using service detection, version analysis, and vulnerability mapping.
 
 ---
 
@@ -62,6 +71,12 @@ scanme.nmap.org
 
 ---
 
+## 📸 Output Preview
+
+![Output](screenshot.png)
+
+---
+
 ## 📌 Example Output
 
 ```
@@ -76,6 +91,23 @@ scanme.nmap.org
 
 [!] Overall Risk Score: 6
 ```
+
+---
+
+## 🔍 CVE Mapping
+
+The tool uses a basic local database to map service versions to known vulnerabilities (CVE).
+
+This demonstrates how real-world vulnerability scanners correlate software versions with publicly known security issues.
+
+---
+
+## 📚 Learning Outcomes
+
+* Understood network reconnaissance workflow
+* Learned automation using Python
+* Gained practical exposure to vulnerability analysis
+* Improved understanding of service-version security risks
 
 ---
 
