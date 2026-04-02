@@ -80,10 +80,10 @@ scanme.nmap.org
 ## 📌 Example Output
 
 ```
-[+] Port 22 → ssh (OpenSSH 6.6.1)
-    ⚠️ Known Vulnerabilities:
-       - CVE-2016-0777
-       - CVE-2015-5600
+[+] Port 22 → SSH (OpenSSH 6.6.1)
+    ⚠️ CVEs Found:
+       - CVE-2016-0777 → HIGH
+    🔥 Risk: HIGH
 
 [+] Port 80 → http (Apache 2.4.6)
     ⚠️ Known Vulnerabilities:
