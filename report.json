@@ -1,0 +1,26 @@
+[
+    {
+        "port": "22",
+        "service": "ssh",
+        "product": "OpenSSH",
+        "version": "6.6.1p1 Ubuntu 2ubuntu2.13"
+    },
+    {
+        "port": "80",
+        "service": "http",
+        "product": "Apache httpd",
+        "version": "2.4.7"
+    },
+    {
+        "port": "9929",
+        "service": "nping-echo",
+        "product": "Nping echo",
+        "version": null
+    },
+    {
+        "port": "31337",
+        "service": "tcpwrapped",
+        "product": null,
+        "version": null
+    }
+]

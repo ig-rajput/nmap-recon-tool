@@ -1,27 +1,34 @@
 import subprocess
 import xml.etree.ElementTree as ET
+import argparse
+import json
 
-# Simple local CVE database (demo purpose)
+# Simple local CVE database
 CVE_DB = {
     "OpenSSH 6": [
-        "CVE-2016-0777 (Information Leak)",
-        "CVE-2015-5600 (Authentication Bypass)"
+        "CVE-2016-0777",
+        "CVE-2015-5600"
     ],
     "Apache 2.4.6": [
-        "CVE-2017-3169 (Authentication Bypass)",
-        "CVE-2017-15715 (Input Validation Issue)"
+        "CVE-2017-3169",
+        "CVE-2017-15715"
     ]
 }
 
 
+def get_target():
+    parser = argparse.ArgumentParser(description="Smart Network Recon Tool")
+    parser.add_argument("target", help="Target IP or domain")
+    return parser.parse_args().target
+
+
 def run_nmap_scan(target):
-    # Run Nmap and save output as XML
     print(f"[+] Scanning target: {target}")
-    
+
     command = [
         r"C:\Program Files (x86)\Nmap\nmap.exe",
-        "-sT",   # works without admin
-        "-sV",   # service + version detection
+        "-sT",
+        "-sV",
         "-oX", "scan.xml",
         target
     ]
@@ -30,7 +37,6 @@ def run_nmap_scan(target):
 
 
 def parse_nmap_xml(file):
-    # Parse XML output from Nmap
     tree = ET.parse(file)
     root = tree.getroot()
 
@@ -56,9 +62,7 @@ def parse_nmap_xml(file):
 
 
 def check_cve(product, version):
-    # Match service with known CVEs
     found = []
-
     full_text = f"{product} {version}"
 
     for key in CVE_DB:
@@ -66,6 +70,11 @@ def check_cve(product, version):
             found.extend(CVE_DB[key])
 
     return found
+
+
+def save_report(results):
+    with open("report.json", "w") as f:
+        json.dump(results, f, indent=4)
 
 
 def analyze_results(results):
@@ -81,35 +90,36 @@ def analyze_results(results):
 
         full_service = f"{product} {version}".strip()
 
-        print(f"[+] Port {port} → {service} ({full_service})")
+        print(f"[+] Port {port} → {service.upper()} ({full_service})")
 
-        # CVE lookup
         cves = check_cve(product, version)
 
         if cves:
-            print("    ⚠️ Known Vulnerabilities:")
+            print("    ⚠️ CVEs Found:")
             for cve in cves:
-                print(f"       - {cve}")
+                print(f"       - {cve} → HIGH")
+            print("    🔥 Risk: HIGH")
             risk_score += 3
         else:
-            print("    ✓ No known CVEs found")
+            print("    ✓ No known vulnerabilities")
 
-        # Extra basic logic
-        if service == "ssh":
-            print("    → Check for brute-force / weak credentials")
-        elif service == "http":
-            print("    → Test for XSS, SQLi, directory issues")
+        # Smart suggestions
+        if service == "http":
+            print("    → Suggestion: Run web vulnerability scan (Burp Suite / dirsearch)")
+        elif service == "ssh":
+            print("    → Suggestion: Check for brute-force or weak credentials")
         elif service == "smtp":
-            print("    → Check for open relay")
+            print("    → Suggestion: Check for open relay")
 
     print(f"\n[!] Overall Risk Score: {risk_score}")
 
 
 def main():
-    target = input("Enter target IP or domain: ")
+    target = get_target()
 
     run_nmap_scan(target)
     results = parse_nmap_xml("scan.xml")
+    save_report(results)
     analyze_results(results)
 
 
